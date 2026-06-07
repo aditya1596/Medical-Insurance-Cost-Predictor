@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Medical Insurance Predictor</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Insurance Predictor</h1>
+
+    <form action="/predict" method="post">
+
+        <div class="input-group">
+            <label>Age</label>
+            <input type="number" name="age" placeholder="Enter your age" required>
+        </div>
+
+        <div class="input-group">
+            <label>Gender</label>
+            <select name="sex" required>
+                <option value="">Select Gender</option>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>BMI</label>
+            <input type="number" step="any" name="bmi" placeholder="Enter BMI" required>
+        </div>
+
+        <div class="input-group">
+            <label>Children</label>
+            <input type="number" name="children" placeholder="No. of children" required>
+        </div>
+
+        <div class="input-group">
+            <label>Smoking Status</label>
+            <select name="smoker" required>
+                <option value="">Select Status</option>
+                <option value="0">Non-Smoker</option>
+                <option value="1">Smoker</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Region</label>
+            <select name="region" required>
+                <option value="">Select Region</option>
+                <option value="0">Southeast</option>
+                <option value="1">Southwest</option>
+                <option value="2">Northeast</option>
+                <option value="3">Northwest</option>
+            </select>
+        </div>
+
+        <button type="submit">Predict Cost</button>
+
+    </form>
+
+    {% if prediction_text %}
+    <div class="result-card">
+
+        <div class="result-title">
+            Estimated Insurance Cost
+        </div>
+
+        <div class="result-value">
+            {{ prediction_text }}
+        </div>
+
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
