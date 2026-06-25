@@ -32,10 +32,11 @@ def predict():
 
     # Prediction
     prediction = model.predict(features_scaled)
+    prediction = np.expm1(prediction)
 
     return render_template(
         'index.html',
-        prediction_text=f'Estimated Insurance Cost: {prediction[0]:.2f}'
+        prediction_text=f'Estimated Insurance Cost: ₹{prediction[0]:,.2f}'
     )
 
 # Run app
