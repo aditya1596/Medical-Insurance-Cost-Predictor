@@ -36,7 +36,7 @@ def predict():
 
     return render_template(
         'index.html',
-        prediction_text=f'Estimated Insurance Cost: ₹{prediction[0]:,.2f}'
+        prediction_text=f'Estimated Insurance Cost: ${prediction[0]:,.2f}'
     )
 
 # Run app
@@ -45,3 +45,7 @@ import os
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
+
+
+    # cd C:\medical_self
+# python app.py
