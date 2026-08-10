@@ -11,14 +11,14 @@
 <body>
 
 <div class="container">
-
-    <h1>Insurance Predictor</h1>
+<h1>Insurance Predictor</h1>
+<p class="subtitle">Get an instant estimate of your medical insurance cost</p>
 
     <form action="/predict" method="post">
 
         <div class="input-group">
             <label>Age</label>
-            <input type="number" name="age" placeholder="Enter your age" required>
+            <input type="number" name="age" min="0" max="120" placeholder="Enter your age" required>
         </div>
 
         <div class="input-group">
@@ -32,12 +32,12 @@
 
         <div class="input-group">
             <label>BMI</label>
-            <input type="number" step="any" name="bmi" placeholder="Enter BMI" required>
+            <input type="number" step="any" name="bmi" min="0" placeholder="Enter BMI" required>
         </div>
 
         <div class="input-group">
             <label>Children</label>
-            <input type="number" name="children" placeholder="No. of children" required>
+            <input type="number" name="children" min="0" max="15" placeholder="No. of children" required>
         </div>
 
         <div class="input-group">

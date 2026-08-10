@@ -16,7 +16,6 @@ def home():
 # Prediction route
 @app.route('/predict', methods=['POST'])
 def predict():
-
     age = float(request.form['age'])
     sex = float(request.form['sex'])
     bmi = float(request.form['bmi'])
@@ -24,14 +23,8 @@ def predict():
     smoker = float(request.form['smoker'])
     region = float(request.form['region'])
 
-    # Input array
     features = np.array([[age, sex, bmi, children, smoker, region]])
-
-    # Scaling
-    features_scaled = scaler.transform(features)
-
-    # Prediction
-    prediction = model.predict(features_scaled)
+    prediction = model.predict(features)
     prediction = np.expm1(prediction)
 
     return render_template(
@@ -46,6 +39,5 @@ if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
 
-
-    # cd C:\medical_self
+# cd C:\medical_self
 # python app.py
