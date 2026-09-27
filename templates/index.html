@@ -1,84 +1,105 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medical Insurance Predictor</title>
-
-    <link rel="stylesheet"
-    href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
 
-<div class="container">
-<h1>Insurance Predictor</h1>
-<p class="subtitle">Get an instant estimate of your medical insurance cost</p>
+    <div class="page">
+        <div class="container">
 
-    <form action="/predict" method="post">
+            <div class="header">
+                <div class="icon-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                    </svg>
+                </div>
+                <h1>Insurance Cost Predictor</h1>
+                <p class="subtitle">Get an instant, data-driven estimate of your annual medical insurance charges</p>
+            </div>
 
-        <div class="input-group">
-            <label>Age</label>
-            <input type="number" name="age" min="0" max="120" placeholder="Enter your age" required>
+            <form action="/predict" method="post" class="predict-form">
+
+                <div class="grid">
+
+                    <div class="input-group">
+                        <label for="age">Age</label>
+                        <input type="number" id="age" name="age" min="0" max="120"
+                               placeholder="e.g. 29" value="{{ form_values.age if form_values else '' }}" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="sex">Gender</label>
+                        <select id="sex" name="sex" required>
+                            <option value="" disabled {{ 'selected' if not form_values }}>Select gender</option>
+                            <option value="0" {{ 'selected' if form_values and form_values.sex == '0' }}>Male</option>
+                            <option value="1" {{ 'selected' if form_values and form_values.sex == '1' }}>Female</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="bmi">BMI</label>
+                        <input type="number" id="bmi" step="any" name="bmi" min="0"
+                               placeholder="e.g. 24.5" value="{{ form_values.bmi if form_values else '' }}" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="children">Children</label>
+                        <input type="number" id="children" name="children" min="0" max="15"
+                               placeholder="e.g. 2" value="{{ form_values.children if form_values else '' }}" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="smoker">Smoking Status</label>
+                        <select id="smoker" name="smoker" required>
+                            <option value="" disabled {{ 'selected' if not form_values }}>Select status</option>
+                            <option value="0" {{ 'selected' if form_values and form_values.smoker == '0' }}>Non-Smoker</option>
+                            <option value="1" {{ 'selected' if form_values and form_values.smoker == '1' }}>Smoker</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="region">Region</label>
+                        <select id="region" name="region" required>
+                            <option value="" disabled {{ 'selected' if not form_values }}>Select region</option>
+                            <option value="northeast" {{ 'selected' if form_values and form_values.region == 'northeast' }}>Northeast</option>
+                            <option value="northwest" {{ 'selected' if form_values and form_values.region == 'northwest' }}>Northwest</option>
+                            <option value="southeast" {{ 'selected' if form_values and form_values.region == 'southeast' }}>Southeast</option>
+                            <option value="southwest" {{ 'selected' if form_values and form_values.region == 'southwest' }}>Southwest</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <button type="submit" class="predict-btn">
+                    Predict Cost
+                </button>
+
+            </form>
+
+            {% if prediction_text %}
+            <div class="result-card">
+                <div class="result-title">Estimated Insurance Cost</div>
+                <div class="result-value">{{ prediction_text }}</div>
+                <div class="result-note">Based on a Random Forest model trained on historical insurance data</div>
+            </div>
+            {% endif %}
+
+            <div class="footer-note">
+                Estimates are model-generated and for informational purposes only — not a quote from any insurer.
+            </div>
+
         </div>
-
-        <div class="input-group">
-            <label>Gender</label>
-            <select name="sex" required>
-                <option value="">Select Gender</option>
-                <option value="0">Male</option>
-                <option value="1">Female</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label>BMI</label>
-            <input type="number" step="any" name="bmi" min="0" placeholder="Enter BMI" required>
-        </div>
-
-        <div class="input-group">
-            <label>Children</label>
-            <input type="number" name="children" min="0" max="15" placeholder="No. of children" required>
-        </div>
-
-        <div class="input-group">
-            <label>Smoking Status</label>
-            <select name="smoker" required>
-                <option value="">Select Status</option>
-                <option value="0">Non-Smoker</option>
-                <option value="1">Smoker</option>
-            </select>
-        </div>
-
-        <div class="input-group">
-            <label>Region</label>
-            <select name="region" required>
-                <option value="">Select Region</option>
-                <option value="0">Southeast</option>
-                <option value="1">Southwest</option>
-                <option value="2">Northeast</option>
-                <option value="3">Northwest</option>
-            </select>
-        </div>
-
-        <button type="submit">Predict Cost</button>
-
-    </form>
-
-    {% if prediction_text %}
-    <div class="result-card">
-
-        <div class="result-title">
-            Estimated Insurance Cost
-        </div>
-
-        <div class="result-value">
-            {{ prediction_text }}
-        </div>
-
     </div>
-    {% endif %}
-
-</div>
 
 </body>
+
 </html>
