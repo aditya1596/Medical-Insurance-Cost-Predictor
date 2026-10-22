@@ -190,17 +190,17 @@ The models were evaluated using:
 
 ---
 
-## Model Performance
+## Results
 
-| Model             |   MAE ($) |  RMSE ($) |        R² |
-| ----------------- | --------: | --------: | --------: |
-| **Random Forest** | **2,045** | **4,354** | **0.878** |
-| Gradient Boosting |     2,002 |     4,410 |     0.875 |
-| KNN               |     2,644 |     4,841 |     0.849 |
-| SVR               |     2,210 |     4,928 |     0.844 |
-| XGBoost           |     2,614 |     5,446 |     0.809 |
-| Linear Regression |     3,925 |     7,863 |     0.602 |
-| Decision Tree     |     2,630 |     5,947 |     0.772 |
+| Model | MAE ($) | RMSE ($) | R² |
+|---|---:|---:|---:|
+| **Random Forest (final)** | **2,060** | **4,357** | **0.878** |
+| Gradient Boosting | 2,035 | 4,389 | 0.876 |
+| XGBoost | 2,382 | 4,855 | 0.848 |
+| SVR | 2,243 | 4,996 | 0.839 |
+| KNN | 3,018 | 5,249 | 0.823 |
+| Decision Tree | 2,768 | 6,139 | 0.757 |
+| Linear Regression | 3,888 | 7,814 | 0.607 |
 
 ### Final Model
 
